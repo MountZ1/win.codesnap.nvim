@@ -72,7 +72,7 @@ impl Highlight {
         &self,
         theme_folder: &str,
         theme: &str,
-    ) -> Result<Vec<(&str, Attrs)>, RenderError> {
+    ) -> Result<Vec<(&str, Attrs<'_>)>, RenderError> {
         let syntax_set = two_face::syntax::extra_newlines();
         let theme_set = ThemeSet::load_from_folder(theme_folder)
             .map_err(|_| RenderError::HighlightThemeLoadFailed)?;

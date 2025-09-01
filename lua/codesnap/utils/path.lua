@@ -41,6 +41,11 @@ function path_utils.get_default_save_path()
     Linux = function()
       return os.getenv("XDG_PICTURES_DIR") or home_picture_folder
     end,
+    Windows_NT = function()
+      -- Use Windows-style path
+      local userprofile = os.getenv("USERPROFILE") or os.getenv("HOME")
+      return userprofile .. "\\Pictures"
+    end,
   })
 end
 

@@ -29,12 +29,20 @@ function main.copy_ascii_snapshot(extension)
 end
 
 function main.save_snapshot_with_config(config)
-  if string_utils.is_str_empty(static.config.save_path) then
-    error(
-      "If you want to save snapshot in somewhere, you should config the save_path before, refer: https://github.com/mistricky/codesnap.nvim?tab=readme-ov-file#save-the-snapshot",
-      0
-    )
+  local path = main.open_save_dialog()
+
+  if path ~= nil then
+    static.config.save_path = path
+    config.save_path = path
+  else
+    error("Cancel taking code snap", 0)
   end
+  -- if string_utils.is_str_empty(static.config.save_path) then
+  --   error(
+  --     "If you want to save snapshot in somewhere, you should config the save_path before, refer: https://github.com/mistricky/codesnap.nvim?tab=readme-ov-file#save-the-snapshot",
+  --     0
+  --   )
+  -- end
 
   local matched_extension = string.match(static.config.save_path, "%.(.+)$")
 
@@ -46,6 +54,41 @@ function main.save_snapshot_with_config(config)
   vim.cmd("delmarks <>")
   ---@diagnostic disable-next-line: need-check-nil
   vim.notify("Save snapshot in " .. config.save_path .. " successfully")
+end
+
+function main.open_save_dialog()
+  -- Get current date and time for default filename
+  local date_time = os.date("%d%m%y%H%M%S")
+  local default_filename = "codesnap-" .. date_time .. ".png"
+
+  local temp_ps = os.getenv("TEMP") .. "\\save_dialog.ps1"
+
+  local ps_content = string.format(
+    [[
+Add-Type -AssemblyName System.Windows.Forms
+$SaveFileDialog = New-Object System.Windows.Forms.SaveFileDialog
+$SaveFileDialog.Filter = "PNG Images (*.png)|*.png"
+$SaveFileDialog.FileName = "%s"
+$SaveFileDialog.DefaultExt = "png"
+$result = $SaveFileDialog.ShowDialog()
+if ($result -eq "OK") {
+   Write-Output $SaveFileDialog.FileName
+}
+]],
+    default_filename
+  )
+
+  local file = io.open(temp_ps, "w")
+  file:write(ps_content)
+  file:close()
+
+  local handle = io.popen('powershell -ExecutionPolicy Bypass -File "' .. temp_ps .. '"')
+  local result = handle:read("*a"):gsub("%s+$", "")
+  handle:close()
+
+  os.remove(temp_ps)
+
+  return result ~= "" and result or nil
 end
 
 -- Take a snapshot and copy it into clipboard

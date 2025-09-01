@@ -19,6 +19,7 @@ pub struct RenderParams {
 
 #[derive(Default)]
 pub struct ComponentRenderParams {
+    #[allow(dead_code)]
     pub parent_render_params: RenderParams,
     pub sibling_render_params: RenderParams,
 }
@@ -52,6 +53,7 @@ impl ComponentRenderParams {
 pub trait Component {
     fn children(&self) -> &Vec<Box<dyn Component>>;
 
+    #[allow(dead_code)]
     fn align(&self) -> ComponentAlign {
         ComponentAlign::Row
     }
