@@ -30,8 +30,8 @@
 
 </p>
 
-<h1 align="center">CodeSnap.nvim</h1>
-<p align="center">📸 Snapshot plugin with rich features that can make pretty code snapshots for Neovim</p>
+<h1 align="center">win.CodeSnap.nvim</h1>
+<p align="center">📸 Snapshot plugin with rich features that can make pretty code snapshots for Neovim windows</p>
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -154,9 +154,6 @@ If you use `Lazy.nvim` as your package manager, here are some examples show you 
   },
 }
 ```
-
-### Windows Support
-Unfortunately, CodeSnap does not support Windows yet, but version `v0.0.x` is working fine on Windows. If you want to use CodeSnap on Windows, we recommend you pin the version to `0.0.11` to use CodeSnap, follow to [0.0.11 Document](https://github.com/mistricky/codesnap.nvim/tree/v0.0.11) for more detail.
 
 ## Usage 
 `CodeSnap.nvim` provides the following two ways to take snapshots of currently selected code
