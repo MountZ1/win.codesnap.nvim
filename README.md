@@ -87,6 +87,7 @@ v1.x has a different architecture and better performance than v0.x, and v1.x can
 - 🔢 Support for display line number make sharing code snapshot easier
 - 🔆 Highlight specific lines of code
 - 🖨️ Generate ASCII art code snapshots
+- 🪟 Native Windows save dialog — save snapshots with a Windows file picker, no need to configure `save_path`
 
 ## Prerequirements
 - Neovim 0.9.0+
@@ -189,6 +190,12 @@ require("codesnap").setup({
   save_path = ...
 })
 ```
+
+### Windows native save dialog
+
+On Windows, instead of configuring `save_path`, you can use `CodeSnapSave` to open a native 
+Windows file picker dialog powered by PowerShell — allowing you to choose the save location 
+each time without any upfront configuration.
 
 https://github.com/mistricky/codesnap.nvim/assets/22574136/69b27e77-3dce-4bc3-8516-89ce636fe02d
 
